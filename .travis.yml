@@ -12,6 +12,6 @@ install:
 - sudo apt install cppcheck
 
 script:
-- mkdir iz1/cmake-build-debug && cd iz1/cmake-build-debug/
+- mkdir ./iz1 && cd ./iz1
 - cmake ..
 - make clean && make 
