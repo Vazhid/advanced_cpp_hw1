@@ -12,7 +12,6 @@ install:
 - sudo apt install cppcheck
 
 script:
-- mkdir ./iz1 && cd ./iz1
 - cmake ..
 - cmake CMakeLists.txt
 - make clean && make
