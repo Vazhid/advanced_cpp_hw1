@@ -12,6 +12,8 @@ install:
 - sudo apt install cppcheck
 
 script:
-- cmake ..
-- cmake CMakeLists.txt
-- make clean && make
+- mkdir build
+- cd build
+- cmake .. 
+- cmake --build .
+- ctest --output-on-failure
