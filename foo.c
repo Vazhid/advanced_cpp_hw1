@@ -12,7 +12,7 @@ void print_out(int cap, storage_device *lib)
             printf("Функция перезаписи..........: ");
             if (lib->rewrite == 1)
             {
-                printf("Есть\n");
+                printf("Есть \n");
             }
             else printf("Нет\n");
 
