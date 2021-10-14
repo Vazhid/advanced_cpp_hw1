@@ -1,77 +1,78 @@
 #include "foo.h"
 
-void print_out(int Cap, StorageDevice *lib)
+void print_out(int cap, storage_device *lib)
 {
     if(lib != NULL)
     {
-        print_out(Cap, lib->Next);
-        if (Cap <= lib->Cap){
-            printf("Инвентарный номер накопителя: %d\n", lib->Id);
-            printf("Максимальный объём..........: %d Гб\n", lib->Cap);
+        print_out(cap, lib->Next);
+        if (cap <= lib->capacity){
+            printf("Инвентарный номер накопителя: %d\n", lib->number);
+            printf("Максимальный объём..........: %d Гб\n", lib->capacity);
             printf("Тип накопителя..............: %s\n", lib->type);
             printf("Функция перезаписи..........: ");
-            if (lib->Rewr == 1){
+            if (lib->rewrite == 1)
+            {
                 printf("Есть\n");
-            } else {
-                printf("Нет\n");
             }
+            else printf("Нет\n");
+
             printf("-----------------------------\n");
 
         }
     }
 }
 
-StorageDevice* to_lib(FILE* base)
+storage_device* to_lib(FILE* base)
 {
-    StorageDevice* lib = NULL;
+    storage_device* lib = NULL;
 
-    char st[25] = {0};
-    fgets(st, 25, base);
+    char st[MAX_SIZE_STRING] = {0};
+    fgets(st, MAX_SIZE_STRING, base);
 
     while(!feof(base))
     {
-        StorageDevice* elem = from_file(st);
+        storage_device* elem = from_file(st);
         if(lib != NULL && elem != NULL){
             elem->Next = lib;
             lib = elem;
         } else if (elem != NULL){
             lib = elem;
         }
-        fgets(st, 25, base);
+        fgets(st, MAX_SIZE_STRING, base);
     }
     return lib;
 }
 
-StorageDevice* from_file(char* st)
+storage_device* from_file(char* st)
 {
     if(st[0] == '\n'){
         return NULL;
     }
 
-    char stId[10] = {0}, stType[10] = {0}, stCap[5] = {0}, stR[2] = {0};
-    StorageDevice* File = malloc(sizeof(struct StorageDevice));
+    char st_number[10] = {0}, st_type[10] = {0}, st_cap[5] = {0}, st_rewrite[2] = {0};
+    storage_device* File = malloc(sizeof(struct StorageDevice));
     if(File == NULL){
         printf("Malloc error > return NULL\n");
         return NULL;
     }
 
 
-    strncpy(stId, &st[0], 7);
-    strncpy(stType, &st[8], 5);
-    strncpy(stCap, &st[14], 4);
-    strncpy(stR, &st[19], 1);
+    strncpy(st_number, &st[0], 7);
+    strncpy(st_type, &st[8], 5);
+    strncpy(st_cap, &st[14], 4);
+    strncpy(st_rewrite, &st[19], 1);
 
 
-    File->Id = atoi(stId);
-    File->Cap = atoi(stCap);
-    File->Rewr = atoi(stR);
-    strncpy(File->type, &stType[0], 10);
+    File->number = atoi(st_number);
+    File->capacity = atoi(st_cap);
+    File->rewrite = atoi(st_rewrite);
+    strncpy(File->type, &st_type[0], 10);
     File->Next = NULL;
 
     return File;
 }
 
-void free_lib(StorageDevice* lib)
+void free_lib(storage_device* lib)
 {
     if(lib != NULL)
     {

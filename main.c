@@ -4,12 +4,13 @@ int main()
 {
     int Cap_p;
 
-    StorageDevice *lib = NULL;
+    storage_device *lib = NULL;
 
     FILE *base;
     base = fopen("base.txt", "r");
     if(base == NULL){
         printf("Файл 'base.txt' не найден\n");
+        return 0;
     }
 
     lib = to_lib(base);
@@ -22,4 +23,3 @@ int main()
     free_lib(lib);
     return 0;
 }
-
