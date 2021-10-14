@@ -1,35 +1,27 @@
 #include "foo.h"
 
-
-void _printall(StorageDevice* lib)
+void print_out(int Cap, StorageDevice *lib)
 {
     if(lib != NULL)
     {
-        _printall(lib->Next);
-        printf("%d %s %4d %d\n", lib->Id, lib->type, lib->Cap, lib->Rewr);
-    }
-}
-
-void PrintC(int Cap, StorageDevice *lib)
-{
-    if(lib != NULL)
-    {
-        PrintC(Cap, lib->Next);
+        print_out(Cap, lib->Next);
         if (Cap <= lib->Cap){
             printf("Инвентарный номер накопителя: %d\n", lib->Id);
             printf("Максимальный объём..........: %d Гб\n", lib->Cap);
             printf("Тип накопителя..............: %s\n", lib->type);
             printf("Функция перезаписи..........: ");
-            if (lib->Rewr == 1) printf("Есть\n");
-            else printf("Нет\n");
-
+            if (lib->Rewr == 1){
+                printf("Есть\n");
+            } else {
+                printf("Нет\n");
+            }
             printf("-----------------------------\n");
 
         }
     }
 }
 
-StorageDevice* WrTolib(FILE* base)
+StorageDevice* to_lib(FILE* base)
 {
     StorageDevice* lib = NULL;
 
@@ -38,7 +30,7 @@ StorageDevice* WrTolib(FILE* base)
 
     while(!feof(base))
     {
-        StorageDevice* elem = FromFile(st);
+        StorageDevice* elem = from_file(st);
         if(lib != NULL && elem != NULL){
             elem->Next = lib;
             lib = elem;
@@ -50,7 +42,7 @@ StorageDevice* WrTolib(FILE* base)
     return lib;
 }
 
-StorageDevice* FromFile(char* st)
+StorageDevice* from_file(char* st)
 {
     if(st[0] == '\n'){
         return NULL;
@@ -79,11 +71,11 @@ StorageDevice* FromFile(char* st)
     return File;
 }
 
-void freelib(StorageDevice* lib)
+void free_lib(StorageDevice* lib)
 {
     if(lib != NULL)
     {
-        freelib(lib->Next);
+        free_lib(lib->Next);
         free(lib);
     }
 }

@@ -1,7 +1,3 @@
-//
-// Created by Vazhid on 13.10.2021.
-//
-
 #ifndef UNTITLED1_FOO_H
 #define UNTITLED1_FOO_H
 
@@ -19,14 +15,12 @@ struct StorageDevice {
     StorageDevice* Next;
 };
 
-void _printall(StorageDevice *lib);
+void print_out(int Cap, StorageDevice *lib);
 
-void PrintC(int Cap, StorageDevice *lib);
+StorageDevice* from_file(char* st);
 
-StorageDevice* FromFile(char* st);
+StorageDevice* to_lib(FILE* base);
 
-StorageDevice* WrTolib(FILE* base);
-
-void freelib(StorageDevice *lib);
+void free_lib(StorageDevice *lib);
 
 #endif //UNTITLED1_FOO_H
